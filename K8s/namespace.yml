@@ -1,0 +1,8 @@
+#  This is a menifest file to create an object/resources
+kind: Namespace
+apiVersion: v1
+metadata: 
+  name: nginx
+
+# to create 
+# kubectl apply -f namespace.yml

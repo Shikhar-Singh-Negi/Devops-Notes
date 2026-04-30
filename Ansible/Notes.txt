@@ -1,0 +1,169 @@
+## problem before Ansible
+ - You have to manage many System 
+ - Server are in different environment(Dev, Prod, etc)
+ - 
+
+## Ansible
+- It is a configuration management tool
+- It helps to manage different environment
+- It allows you to do Iaac and configuration management
+
+
+## Ansible vs terraform
+
+- terraform - ye infrastructure banana me use hota hai.
+- Ansible - ye isko manage karne me use hota hai.
+ 
+
+## Admin want to update all the system
+
+-Pull Based - Chef      Push Based - Ansible
+
+# push based
+
+- one system has installed ansible. That system push update on to other system/servers 
+
+
+# Qus :- You have given a task that you have 3 server and 1 main server and you have to do remotely through SSH. You have to  manage configuration and update.
+
+- We just have to install Ansible on main/master machine and this master push the update to all the other machine 
+
+
+SSh:- Secured Shell  (Ek system terminal ko dusre system ke terminal se connect karna ho tho iske through connect karte hai)
+
+* hame host file me baki server ki information batadete hai.
+
+## steps:- Setup and connect all servers 
+
+- Update host file  sudo  vim/etc/ansible/hosts
+
+in this  we edit in Ex 2:
+
+- We can create multiple groups 
+ex:- 
+ 
+// Hum group name ko [] iske andar rakhte hai
+
+ [servers]
+ server_1 ansible_host = publicIp            // Ex - 100.26.29.41
+ server_2 ansible_host = publicIp            // hum ip ke badle host name bhi dal sakte hai
+ server_3 ansible_host = publicIp
+
+ 
+- mkdir keys
+- cd keys/
+- In local host we use scp command to copy master-key.pem        //scp = secured copy with chmod 400
+
+-  sudo vim/etc/ansible/hosts
+
+[servers:vars]
+ansible_python_interpriter=/usr/bin/python3            //every server will get same version
+ansible_user=ubuntu                                    // for particular user 
+//these up two are optional we can change as which software require
+ansible_ssh_private_key_file=/home/ubuntu/keys/master-key.pem
+
+
+- ansible server -m ping         //To check all servers are connected or not
+
+- ansible server -a "sudo apt update"    // TO update all servers
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+# To update only 1 server     //Uss server ko ek alag group me dal do
+
+- sudo vim /etc/ansible/hosts
+
+ [servers]
+ server_1 ansible_host = publicIp              
+ server_2 ansible_host = publicIp  
+ 
+ 
+ [prd]
+ server_3 ansible_host = publicIp
+
+ [all:vars]
+ ansible_python_interpriter=/usr/bin/python3            
+ ansible_user=ubuntu                                    
+ ansible_ssh_private_key_file=/home/ubuntu/keys/master-key.pem
+
+- ansible prd -m ping
+
+ 
+
+---------------------------------------------------------------------------------------------------------------------------------------
+## Inventory list
+
+isse hum dekh sakte hai kon kon se servers hai.
+isse pata chal jata hai ki kon kon se variable hai particular server pe
+
+
+- ansible-inventory --list
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+## playbook  Yml file
+
+- mkdir playbooks
+
+- vim date_play.yml
+
+ # create playbook of showing date
+
+- 
+ name: Date Playbook 
+ hosts: servers              //Which server ex:- dev, pro, etc
+ tasks: 
+   - name: Show date
+     command: date
+   - name: Show uptime
+     command: uptime
+
+- ansible-playbook -v date_play.yml              //-v to show the output of server
+
+
+## Create a command to install nginx on the server
+vim nginx_play.yml
+-
+ name: Install Nginx & Start it
+ hosts: servers
+ become: yes                        //To become admin/root user
+ task: 
+  - name: Install Nginx
+    apt: 
+	name: nginx
+	state: latest
+  - name: Start Nginx
+    service:
+	name: nginx
+	state: started
+ 	enabled: yes                    //If system restart the nginx will auto start
+
+
+## Deploy webpage 
+
+vim deploy_staicpage_play.yml
+
+-
+ name: Install nginx and server static website
+ hosts: prd
+ become: yes
+ task:
+	- name: Install nginx
+	  apt: 
+	 	name: nginx
+	  	state: latest
+	- name: stat nginx
+	  service:
+		name: nginx
+		state: stared
+		enable: yes 
+
+	- name: Deploy Web page
+	  copy:
+		src: index.html
+		dest: /var/www/html/          //yaha pe nginx ke static page serve hote hai
+
+- ansible-playbook deploy_staticpage_play.yml
+	
+ 

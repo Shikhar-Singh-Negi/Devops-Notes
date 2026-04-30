@@ -1,0 +1,142 @@
+CI/CD
+
+Continuous Integration
+
+Continuous Delivery(Deployment)
+
+CI/CD Pipeline
+
+
+## CI/CD Tools
+
+- GitHub Actions
+- Jenkins
+- Circle CI
+- Gitlab CI CD
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+## GitHub Actions
+
+Automate developer workforce
+
+- We can automate workflow Series of event
+
+- We define these automations using YAML/YML files
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+## YAML Template
+
+name: my-first-workflow                //Name of the process(it is optional)
+
+on: push    //Event which trigger workflow and we can also give details (push main,dev,etc)
+
+jobs:
+
+	job_1:                         // job name
+
+		runs-on: ubuntu-latest
+
+		steps:
+
+			- name: My first step            // optional name
+
+			run: echo "Hello world!"
+
+			- name: Create new dir
+
+			run: mkdir newFolder
+
+## jest use for js Testing
+
+
+In case of ci in gitActions  we use  
+ -run: npm ci
+ -run: npm run build --if-present
+ -run: npm test
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+To deploy MERN Stack project through CI/CD using GitAction
+
+Steps:- Backend
+
+1. we create two new repo frontend, backend.
+
+2. first we push backend to GitHub.
+
+3. We create ec2 instance.
+
+4. we open port 80         (For frontend we use nginx it is a proxy server).
+
+5. update all apt & install nodejs, npm
+
+6. install pm2(it is a production process manager for nodejs applications it keeps application alive forever).  (sudo npm install -g pm2) 
+
+7. install nginx (it is a reverse proxy server isse koi bhi user directly webserver ko access karpayega usko port number dalna nahi padega).(sudo apt install nginx)
+
+8. Make ci/cd pipeline for node in GitAction (add commands like runs-on: self-hosted, run: sudo pm2 restart backend)
+
+9. Create new self hosted runners in actions (copy and Run commands in ec2 instance)
+
+10. -  run sudo ./svc.sh install  
+    -  sudo ./svc.sh start
+    -  cd _word/
+    -  cd /Backend(Name of repo)
+    -  nano .env(copy and past all the env variable form code)
+    -  ls -a    (to check env file)
+    -  allow access of port 8080 in ec2 instance
+    
+11. sudo pm2 start service.js --name=ANYNAME
+
+12. Change Mongo Atlas access to allow anywhere (But for industry level we only allow specific ip address only they can access.)
+
+ 
+Steps:- Frontend
+
+1. Push code to GitHub
+
+2. Create new work flow 
+
+3. create yaml file (runs-on: self-hosted  npm run build)
+
+4. setup runner
+
+5. mkdir frontend-runner && cd frontend-runner
+
+6. and runner the runner command 
+
+7. - sudo ./svc.sh install
+   - sudo ./svc.sh start
+   -  cd _word/
+   -  cd /frontend(Name of repo)
+   
+8.  - hame nginx ka root path ko hame point kara padega frontend ke build files pe  
+    - aur hame nginx ko executable  permission deni padegi to all the parent dir of frontend files.
+
+9. - first find out where the build file located 
+   - ls -a
+   - cd dist/
+   - pwd      (copy the path)
+   - cd /etc/nginx/ 
+   - ls
+   - cd sites-available/
+   - sudo nano default             (overwrite the root path to the dist path and also change the server name tho server url(public dns))
+   - sudo systemctl restart nginx
+   
+   (Giving permision to the executable parent dir)
+   - sudo chmod o+x /home/ubuntu/frontend-runner/_work/NAMEOFPROJ/NAMEOFPROJ/
+   - sudo chmod o+x /home/ubuntu/frontend-runner/_work/NAMEOFPROJ
+   - sudo chmod o+x /home/ubuntu/frontend-runner/_work
+   - sudo chmod o+x /home/ubuntu/frontend-runner
+   - sudo chmod o+x /home/ubuntu
+   - sudo chmod o+x /home
+   - sudo systemctl restart nginx
+
+10. change all url on the frontend files of backend
+
+11. Note:- Always use the latest api in the .env file
+
+	

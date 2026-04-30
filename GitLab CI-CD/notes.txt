@@ -1,0 +1,103 @@
+## GitLab
+
+It is a project management tool and it contains good features for CI/CD, DevOps, DevSecOps
+
+* Isme password nahi hota hai isme SSH , SSO/SAML  ya Personal Access Token ya single sign-on ke through connect karte hai
+
+## GitHub vs GitLab
+
+GitHub --> Cloud --> GitHub.com   isko hum apne instance pe nahi chala sakte hame paise dene padege chalane ke liye(Microsoft)
+
+GitLab --> Self host  isko hum instance pe chala sakte hai free me(Open source)
+
+
+** GitHub me "Repository" bola jata hai.
+** GitLab me "Project" bola jata hai. 
+
+
+
+
+
+
+
+## GitHub vs BitBucket
+
+
+
+## GitLab Duo(Ai bot)
+
+
+
+
+
+## GitLab CI/CD
+
+* File name should be in .gitlab-ci.yml
+
+  [CI pipeline workflow]
+* Pipeline --> Stages --> Jobs
+
+EX:-
+	Pipeline Stages
+	1. Build
+	2. Test
+	3. Push
+	4. Deploy
+ 
+** jase hi hum .gitlab-ci.yml wali file push karege gitlab me wase hi build wala option aa jaiyega
+
+ 
+
+# Runners
+
+Runners are the processes that pick up and execute CI/CD jobs for GitLab
+
+Jenkins has Agents
+
+# Variables
+
+variable store information that you can use in job scripts.
+
+Types of variables:-
+
+	* Protected :- Only expose to protected branches or protected tags
+	* Masked :- Hidden in job logs. Must match masking requirements.(Very Important)
+	* Expanded :- variable with $ will be treates as the start of referencr to another variable.
+
+** Note:- We use masked variable to hide/protect our credentials
+
+
+## To Study 
+
+* Pre build variable name
+* User define variable
+ 
+
+
+
+*#*#* YML Imp
+	*	agar hum object banate hai tho ye "-" use nahi karte 
+		List banate hai tab use karte hai.
+
+	*	">" is use to create
+		">>" is use to append
+
+## Artifacts
+
+Logs Reports download in a file
+The things which we can collect form the pipeline so that it can share them is known as Artifacts
+
+
+## Self hosted Runners , SaaS Runners(instance Runners)
+
+1. First we have to install GitLab Runner on instance
+2. Link the gitlab runner
+3. And add tags on the .gitlab-ci.yml file in jobs in which we want to run the code on different instance
+
+
+Note:- If the runner not work properly the go to 
+		1. /home/gitlab-runner/
+		2. ls -a
+		3. .bash_logout (comment the data)
+		4. gitlab-runner run
+

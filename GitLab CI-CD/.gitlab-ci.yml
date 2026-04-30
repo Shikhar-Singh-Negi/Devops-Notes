@@ -1,0 +1,58 @@
+stages:
+  - build
+  - test
+  - push
+  - deploy
+
+# User-define Variable
+variables:
+  DEPLOY_ENV: "production"
+  GITLAB_USER_KEY: "this-is-my-secret-key"
+
+build_job :
+  stage: build
+  script:
+    - echo "This build is done using command <docker build -t tag .>"
+  # For Runner
+  tags: 
+    - dev
+
+
+test_job:
+  stage: test
+  script:                                       # Inbuild Variable
+    - echo "This is testing of out docker build $CI_COMMIT_AUTHOR"
+    - mkdir -p logs
+    - echo "These are my test reslts" > logs/app.log
+  artifacts:
+    paths:
+      - logs/
+    expire_in: 1 week
+
+push_job:
+  stage: push
+  script:
+    - echo "This"                      # Call User-define variable
+    - echo "is pushing to docke hub for $DEPLOY_ENV"
+
+deploy_job:
+  stage: deploy
+  script:
+    - echo "This"
+    - echo "is deploying to EC2"
+    - echo "This log is from &CI_JOB_STAGE" >> logs/app.log
+  artifacts:
+    paths:
+      - logs/
+    expire_in: 1 week 
+
+# This is a parallel test job
+dev_test_job:
+  stage: test
+  script:                       #Using User-define Key
+    - echo "Tested for dev using $GITLAB_USER_KEY:"
+
+prod_test_job:
+  stage: test
+  script:
+    - echo "Tested for prod"  

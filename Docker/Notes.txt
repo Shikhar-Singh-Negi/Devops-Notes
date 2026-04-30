@@ -1,0 +1,274 @@
+Docker Container
+
+1.port
+2.virtual file system
+
+
+advantage:-
+
+* portable
+* Light weight
+
+*If we want to run different version of same program on same machine we create different container and install in it.
+-----------------------------------------------------------------------------------------------------------------------------
+
+Docker Images
+
+It is made up of different - different layers.
+
+* docker image tag Old_Image_Name New_Image_Name         // isse new image tag ban jata hai
+
+
+
+Docker Commands
+
+docker run -it imageName :- This is use to intract(isse hum container ke terminal me command run karege.).
+
+## Docker vs Virtual Machine
+
+
+Note:- Because of docker desktop we are able to run docker on windows,mac, as docker is made for Linux.
+       It adds a small layer of hyperviser to communicate between windows.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Port Binding
+
+To map Host port to container port
+
+docker run -pContainerPort:HostPort Image_name
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Troubleshooting Commands
+
+* docker logs CONT_ID
+
+* docker exec -it COUNT_ID /bin/bash                    Running container ke andar hum koi command use karna chate hai tab ye ues karte hai
+
+              or
+
+* docker exec -it COUNT_ID /bin/sh
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+## Docker Network
+
+* docker network create NETWORK_NAME    
+
+* docker network ls
+
+
+There are three types of driver :-
+
+1. Bridge:
+   
+  -By Default jo bhi new networks create hote hai vo sab ka default bridge driver hota hai.
+
+  - jab bhi hame aasa network chaiye hota hai jisme container interact kar sake ek dusre se same machine me vaha hum bridge driver use karte hai.
+
+
+
+2. host: 
+   
+   -Jo bhi container hum create karte hai, vo wahi same network use karta hai jo humhari host machine use karti hai.
+   - isme container ke pass koi bhi ip address nahi hota hai.
+
+
+3. null: (isolate)
+   - isme container koi aur network se connect nahi ho sakta na host se na koi aur container se.
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+## Docker Compose
+
+Docker Compose is a tool for defining and running multi-container applications.
+
+This is written in the yaml format which contains running and setting up multiple containers.
+
+TO write Yaml file :-
+
+
+version: "3.8"                     //In new docker version we do not have to define version
+
+services:                          //iska matlab hai ki hum kitne containers create karna chate hai hum jitney container create karna chate hai hame utne services define karni jogi.
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+     - "8080:8080"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin@mongo:27017/
+
+//Isme hame network setup karne ki jarurat nahi padti ye apne aap hi create kardeta hai
+
+
+
+//Command to run this file
+
+* docker-compose -f filename.yaml up -d      // up command sabse phale docker network ko setup karega, docker container ko setup karega, running state me layega.
+
+* docker-compose -f filename.yaml down       // isse humhare containers permanently delete ho jaiyege image nahi hogi.
+
+//Jase hi container restart hoga wase hi uska data delete ho jaiyega isse bachne ke liye hub "Volume" ka use karte hai for data persistance.
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+## Dockerizing (in real world we create using Jenkins)
+
+converting the application into docker image is known as dockerizing, and we can share this image with teammates and the person only have to run the docker container on there pc.
+ 
+With the help of docker file we dockerize 
+
+* FROM <image> - this specifies the base image that the build will extend.
+
+* WORKDIR <path> - this instruction specifies the "working directory" or the path in the image where files will be copied and commands will be executed.
+
+* COPY <host-path> <image-path> - this instruction tells the builder to copy files from the host and put them into the container image.
+
+* RUN <command> - this instruction tells the builder to run the specified command.    //(isko bahut baar use karsakte hai).
+
+* ENV <name> <value> - this instruction sets an environment variable that a running container will use.
+
+* EXPOSE <port-number> - this instruction sets configuration on the image that indicates a port the image would like to expose.
+
+* USER <user-or-uid> - this instruction sets the default user for all subsequent instructions.
+
+* CMD ["<command>", "<arg1>"] - this instruction sets the default command a container using this image will run.                //(isko kewal ek baar hi use kar sakte hai)
+
+
+
+Node:- docker build -t node:1.0 .                   // In this -t is use for tag and . is use to select file          : ke bad uska version hota hai.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+## Push to DockerHub // publish Image on DockerHub
+
+first we have to login on terminal
+
+command:-
+*  docker login -u USERNAME  or  login with code
+
+
+
+
+* docker push IMG_NAME
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+## Docker Volumes
+
+Volumes are persistent data stores for containers.
+
+## Docker Commands
+
+* docker volume ls                     // to See volume list
+
+* docker volume create VOL_Name        // to create
+
+  // By default docker create this in C:\ProgramData\docker\volumes   for windows
+  // in Linux/Mac /var/lib/docker/volumes
+
+
+* docker volume rm VOL_Name	       // to delete
+
+* docker volume prune                 // use to delete all unused volumes which was not connected to any containers
+## Note:- This command is dangerous handle it very carefully as it can delete important data which was not connected/unattach to any containers.
+ 
+
+## To attach volume to containers
+
+* docker run -v VOL_NAME:CONT_DIR      //Named Volume :-  Jo already hum create kar chuke hai usko attach karte hai aur agar volume exist nahi karti hai to new create kardega.
+   //  ex       myVolume   /test/data  
+// best for industry/production level
+
+
+* docker run -v MOUNT_Path             //Anonymous volume:- isme volume ke pass koi naam nahi hota jisme hum concern nahi hai ki data kaha store karega.
+
+   // ex        /test/data
+// jab hame temporary level ke liye kaam ho.
+
+
+* docker run -v HOST_DIR:COUNT_DIR      // Bind Mount :- isme host dir path ko container dir path me bind karte hai.
+  //  ex       /desktop/data   /test/data
+
+
+
+note:- iske bina agar humhara container stop, restart, delete ho jaye tho humhara data delete ho jata hai usko save nahi karsate, iss problem ko solve karne ke liye hum volumes ko use karte hai.
+ 
+isme hum apni host machine ke andar a data store create karte hai jisko hum volume bolte hai(basically ye ek file ya directory hai jisko hum reserve kardete hai and hum container ki aur iski mapping kardete hai, jisse jo bhi hum changes hum container me karege vo sare changes volume me reflect hoge jo data humhare local machine me hoga, so isse jab bhi humhara container stop hoga ya delete hoga tho data locally save hoga.
+
+isse hame data bar bar recreate nahi karna padega
+
+
+
+Map container path to desktop path for data :-
+
+*  docker run -it -v Host_Abslute_Path:Container_Abslute_Path ubuntu
+ 
+TO get inside container
+
+* docker exec -it Container_ID /bin/bash
+
+
+
+
+
+// humne isme -it isliye kiya hai taki hum isse intractive state me run kar sake tabhi hum files and folder ko dekh paiyege.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+## Multi-Stage Docker Builds
+
+ 
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+## Monitoring and Logging in Docker
+
+* nohup docker attack Container_ID &             //it save all output logs in a nohup.out  file
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+We never use docker container directly on production level
+
+- crash hone chance hote hai production me.
+- agar hum docker stop/rm 3b(Starting to letters) bhi likhe de tho stop/delete ho jayega.
+
+-- Isliye hum docker ko Orchestrate with Kubernetes karte hai.
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+##  Orchestrating Docker with Kubernetes
+
+- agar docker container kill/stop/crash ho jaye to ye dusra docker container up ho jaye.
+- resource allocation ka bhi kaam karta hai.
+-- auto-heal and auto-scale bhi karta hai 
+
+ 
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+## troubleshoot 
+
+* docker compose up --build
+
+agar build fail hojata hai fir file/config me hum change karte hai par bina iss command ke vo reflect nah hota hai vo apne catch memory se purana data uthata hai iss command se vo start se build karega.
+
+
+
+
+

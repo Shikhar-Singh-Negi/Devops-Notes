@@ -1,0 +1,54 @@
+## Observability
+
+Prometheus use for:-   (port 30000) 
+
+- Monitoring :-  Cpu usage, metrics
+- Logging    :-  Logs
+- Tracing    :-  Traces to easily find errors
+- Alerting   :-  if load is high then gives error
+
+Grafana use for:-   (port 31000)
+
+-Visualize :- It gives visual graphics
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+## Prometheus
+
+ It is a TSDB(time series data base), it stores cpu useage
+
+ It contains servers for scraping & for querying
+ 
+ - we have to create manifest & configuration file  in k8s.
+ - We use HELM Package Manager in k8s for install
+
+If you want to see in the graphs you have to use prom queries
+
+** aur agar humko ek sath sari cheeze chaiye tho hum Grafana use karte hai
+
+ 
+
+HELM:- It is a package manager for k8s manifest file where we can install, uninstall, delete a lot of repos or any application deployed in k8s
+
+
+Packages we have to install in helm for monitoring:-
+
+- alertmanager - kind - Prometheus
+
+- kind - Prometheus - Grafana
+
+- kind - prometheus - kube - prome-operator
+
+- kind - prometheus - kube - state-metrics
+
+- kind - prometheus - kube - Prometheus - node-exporter
+
+** Eks cluster pe hame port forwarding wali dikkat nahi aati hai par kind cluster pe aati hai(docker ke andar)
+
+
+
+## Grafana
+
+ - We have to add data source and make dashboard
+

@@ -1,0 +1,324 @@
+Kubernetes (container Orchestration tool)
+
+Developed by google.
+
+There are two types of applications:-
+
+1. Monolith :- In this all the code/features are in single code base and deploy as a single unit.(mostly in start-ups)
+
+2. Micro Services :- we convert our code in multiple individual unit and all these units has there separate code base and deployed individually.(in big company)
+
+Advantages:-
+
+- Cloud agnostic
+- high availability
+- scalability
+- recovery
+
+Cluster 
+
+- It is a collections of machines
+
+- It is a master-worker(Node)  model
+    
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+## K8s Components
+
+* node :- Node is a machine in which we setup different pods
+
+
+
+* Pods :- The smallest unit of k8s, ek pod ke andar hum single/multiple containers rakh sakte hai(In production level we are advice to run only single container to it).
+
+  - each pods contains there separate private ip address .
+  - If pod restart there ip address will be changed.
+
+
+* Service :- It provides static/permanent ip address for a pod/different sets of pod working on the same service.
+  - Service to service connection is made.
+
+
+* Ingress :- it is like a api gateway ispe agar request aati hai through internet tho ye request ko forward kardeta hai to different services in the cluster itself.
+
+- hum kewal igness ko expose karte hai na ki different services ko in internet
+- ingress ka kaam hota hai to map traffic to different services.(ingress ke andar hum different routing rules define karte hai)
+
+
+
+* ConfigMap :- It is use to store non-sensitive data like - url
+
+note:- example:- agar humhare pod2(db) ka data, url(env) change ho jaye to hame pod1(backend) ko re build karna padega re deploy karna padega. Isse(dynamic data change) bachne ke liye hum url ko configMap pe store kate hai taki kawal vo url change karna pade na ki rebuild karna pade.
+ 
+
+
+* Secret :- It is use to store sensitive data like -username, password.
+
+
+* Volumes :- By default k8s hame koi data persistence nahi deta, This is use for storing data permanently.
+
+
+*Deployment :- If we have to create a complete replica of node we use a blueprint known as deployment.
+  -It insures that the no. of pods are always running, it also manages all pod related updates, rollbacks, scaling.
+  -In a single application we have multiple deployment for scale-up/ scale-down.
+  -Generally we do not prefer databases, it is not possible to fully replicate. It can cause data inconsistency.
+
+
+*StatefulSet :- If we want to replicate database we use StatefulSet, It insures all read/write are the synchronised. 
+ - We can also use for multiple data bases.
+
+**Note :- Even though we can use this but generally we don't use this, In production/reality it is very difficult to  do-so it become very complex for k8s.
+ -- We generally host databases outside the k8s, the application communicates with external db.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+## Minikube :-
+   
+- it is a 1 node k8s cluster to setup in a local system. 
+- we setup all master and worker processes
+
+## Kubectl :-
+
+- It provides CLI through which we interact with api server using commands(minikube se interact iske through hi karege).
+- Ex:= to delete, worker node se kaam karana hai, etc
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+## Minikube Commands
+
+* minikube start
+
+* minikube status
+
+* minikube pause
+
+* minikube stop
+
+* minikube delete
+
+------------------------------------------------------------------------------------------------------------------------------------
+ 
+## kubectl Commands
+
+
+      (get)          // Resource components ki information's ko access kar sakte hai.
+
+* kubectl get nodes   // ye commands singular and plural dono me same work karti hai.
+                      // generally hum singular command ko use karte hai jab particular component use karte hai.
+
+* kubectl get pods
+
+* kubectl get services   // Important components for networking.
+
+
+     (Create)        // We never directly create a pod instead we use deployment.
+
+* kubectl create deployment [NAME] --image=imageName
+       
+
+
+     (Edit)
+
+* kubectl edit deployment            //To edit deployment, By default .yaml file open hogi
+
+
+     (Delete)
+
+* kubectl delete deployment[DEP_NAME]
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+## For debugging  (logs & exec)
+
+
+* kubectl logs[POD_NAME]         // it is use to print/access of a particular pod.
+
+* kubectl exec -it[POD_NAME] --/bin/bash     //To access a terminal of a perticular pod. 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+## create resources,deployment using configration file
+
+// First we have to create a new yaml file
+
+        (apply)
+
+* kubectl apply -f [FILE_NAME]
+
+## YAML Configuration 
+
+// We majorly divide the file into 3 different major components
+
+1. metadata:                         // Additional details
+2. spec:                             // Specifications/ Details
+3. status:                           // detail about Desire state or pods
+   (Isse k8s automaticly store karta hai)
+
+
+## Selector  &&   Labels                **Important**
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Deploying Mongo-app in k8s
+
+Steps:- 
+
+1. We create two container 1st- mongodb  2nd - mongoExpress(frontend)
+2. create in seperate pods
+3. Create two services
+4. Create secret for mongodb (To store credentials like username, password)
+5. secret is connected to both the pods.
+6. Create configmap for db-url (Access for pod2).
+
+#*# username, password ko hum isme convert karege base 64 encoding, useke baad store karege.
+
+command are:- echo -n "WORD" | base64 
+
+** IN production level we use "secret manager"
+
+
+note:-  ---          (It is use in yaml file to seperate/start new configuration).
+
+
+note:- To create service in k8s
+** minikube service ServiceName
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Namespace
+
+To organise our resources
+
+
+byDefault:-
+
+1. kube-system           // For System related components(Not ment for users until very nessary)
+
+2. kube-public           // for publically available component/resources(No authorization require)
+
+3. kube-node-lease       // information about cluster node health & availability 
+
+4. default               // by default we create any resources ex:- deployment, secret, configmap, etc. and we do not define any namespace then it under in default. 
+
+
+** To check namespaces  
+for all:-  kubectl get namespaces
+for a particular:-  kubectl get services -n default
+
+** To create
+
+1. kubectl create namespace [NAMESPACE]
+
+2. kubectl apply -f mongo-deploy.yaml --namespace= [NAMESPACE]      //Not good for production level insted we write in configuration file
+
+                               or (Defined in metadata)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: mongo-Deploy
+ namespace: custom-namespace
+ lables:
+  app: mongo
+
+
+TO check:-  
+kubectl get deployment -n [NAMESPACE]
+
+
+## Uses
+
+1. Separation of concerns
+
+2. Application grouping
+
+3. Environment separation          // deve, staging, production
+
+4. Versioning                      // For new/old application, reduce downtime.
+
+5. Security policy                 // Giving access to team a particular namespace
+
+6. Resource limits/quotas          // set resources for a particular namespace
+
+
+
+## Scope
+
+namespace :- configmap, secret, pods,deploy, service,etc          can only acces in a namespace component.
+
+global scope :- volume, node                                      all over access across cluster.
+
+** kubectl api-resources --namespaced=true          detailed information of each components in namespace
+
+** kubectl api-resources --namespaced=false          for global scope
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+## Kubens
+
+* to install kubens     brew install kubectx
+
+To change default namespace to particular namespace  * kubens NEWNAMESPACE
+
+
+## Ingress 
+
+To access an application throw dns the process by which we access is ingress
+
+
+It is an entry point by which all the request are forward to service and we do not require external service to connect with pod.
+
+ingress ki help se hum define kar pate hai ki konsa dns hame define karna hai
+
+## Ingress controller
+
+
+The entry point is not ingress but the ingress controller jaha pe sare request aa rahi hoti hai and iska kaam hota hai to evaluate, manage and process all the ingress rules.
+
+default ingress controller in k8s is nginx
+
+
+## To enable Ingress 
+
+* minikube addons enable ingress
+
+## port forwarding
+
+* kubectl port-forward -n NAMESPACE_NAME svc/SERVICE_NAME_CONTROLLER EXTERNALPORT:INTERNALPORT(Ex- 8080:80)
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+## Helm - Package manager
+
+ It helps to create a bundle of multiple Yaml files to setup at once and the package we create is known as helm chart.
+
+we can create ,publish 
+we can publish this on artifact Hub 
+we also install already made up helm chart from public repo in artifact hub
+
+
+## uses
+
+1. Package manager
+2. Templating engine
+
+
+## Tiller               in version 2 helm || New version 3 me isko hata diya hai
+
+ye backend server hai iske andar sare deployment config aate hai ye older and newer configs ko store kara hai, histry of all the chart execute.
+
+** Tiller ke pass rollback karne ki bhi ability hoti hai agar new version fail hota hai tho
+
+but ye ek security conser bhi tha as iske pass bahut sari access thi entire cluster as it can create, update, delete things in the cluster

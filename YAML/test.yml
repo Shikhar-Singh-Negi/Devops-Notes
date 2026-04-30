@@ -1,0 +1,74 @@
+# Datatype
+
+# String
+
+chai_name: Masala Chai
+description: "Chai with cardimom & ginger"   #agar hame special symbols likhne hai tho hum double quots me likhte hai
+tagline: 'The best chai in town'
+
+# This is use for multi line 
+brewing_instruction: |
+  boil water
+  add tea leaves
+  add milk
+
+brewing_instruction_two: >
+  boil water
+  add tea leaves
+  add milk
+
+# numbers
+
+cups_per_day: 3.5
+cups_per_day_two: 0xFF22FF
+
+# These all boolean values are supported
+is_hot: true
+add_sugar: yes
+instant: on
+
+# both means null
+sweetner: null
+alternative: ~
+
+# we deals mostly with arrays/lists
+
+spices:
+  - ginger
+  - cloves
+  - black_pepper
+  - true
+  - 200
+
+# nested list
+
+chai_catogries:
+  - name: Traditional
+    varities:
+      - Masala Chai
+      - Ginger chai
+      - Cardmon chai
+  - name: Morden
+    varities:
+      - Vanilla chai
+      - Chocolate chai
+
+
+# default base      use for reference
+
+default_chai_base: &default_base
+  tea: black_tea
+  water: 200ml
+  brewing_time: 5
+
+morning_chai:
+  <<: *default_base
+  milk: 100ml
+
+# type case to string
+
+zip_code: !!str 12345
+
+# force integer
+
+count: !!int "123"

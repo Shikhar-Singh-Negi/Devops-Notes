@@ -1,0 +1,128 @@
+ Prerequisites
+2 or more EC2 instances with Amazon Linux 2, CentOS, or RHEL
+
+An EC2 key pair (PEM file) for SSH access
+
+Security group allowing port 22 (SSH) between instances
+--------------------------------------------------------------------------------------------------
+
+Launch at least 2 EC2 instances:
+
+One = Ansible Master (Control Node)
+
+Others = Slaves (Managed Nodes)
+
+--------------------------------------------------------------------------------------------
+On master node 
+
+sudo yum update -y
+sudo amazon-linux-extras enable ansible2
+sudo yum install -y ansible
+
+-------------------------------------------------------------------------------------------
+Create Ansible User on All Nodes
+Run the following commands on all EC2 instances (master + slaves):
+
+sudo adduser ansible
+sudo usermod -aG sudo ansible
+echo 'ansible:ansible@123' | sudo chpasswd
+-----------------------------------------------------------------------------------------------------
+
+ Enable Password SSH Login on the Slave
+On the slave node, check/edit SSH config:
+
+sudo nano /etc/ssh/sshd_config
+Ensure the following are set:
+
+PasswordAuthentication yes
+PermitRootLogin yes
+PubkeyAuthentication yes
+
+--------------------------------------------------------------------------------------------------
+
+Allow passwordless sudo for ansible user (recommended for automation)
+Edit the sudoers file on the managed node (172.31.14.187) using:
+
+
+sudo visudo
+And add the following line at the end (replace ansible with the correct username):
+
+ansible ALL=(ALL) NOPASSWD: ALL
+
+
+------------------------------------------------------------------------------------------
+
+Setup SSH Key from Master to Slaves
+On the master node:
+Switch to ansible user:
+
+bash
+Copy
+Edit
+sudo su - ansible
+Generate SSH key:
+
+bash
+Copy
+Edit
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N ""
+Copy SSH key to each slave:
+
+bash
+Copy
+Edit
+ssh-copy-id -i ~/.ssh/id_rsa.pub ansible@<SLAVE_PRIVATE_IP>
+
+--------------------------------------------------------------------------------------
+mkdir ~/ansible
+cd ~/ansible
+nano hosts
+
+
+[webservers]
+172.31.XX.XX ansible_user=ansible
+172.31.XX.YY ansible_user=ansible
+
+
+ansible -i hosts all -m ping
+
+
+----------------------------------------------------------------------------------------------
+
+---
+- name: Update All Nodes
+  hosts: all
+  become: true
+  tasks:
+    - name: Run yum update
+      yum:
+        name: '*'
+        state: latest
+
+
+ansible-playbook -i hosts playbook.yml
+------------------------------------------------------------------------------------------
+
+playbook2 
+
+---
+- hosts: devops
+  user: ansible
+  become: true
+  connection: ssh
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+
+
+
+
