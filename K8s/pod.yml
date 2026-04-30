@@ -1,0 +1,29 @@
+kind: Pod
+apiVersion: v1
+metadata: 
+  name: nginx-pod
+  namespace: nginx
+
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containersPort: 80 
+
+# To create pod
+# kubectl apply -f pod.yml
+
+# To check 
+# kubectl get pods -n nginx
+#                    namespace
+
+
+# Most Important commands
+
+# To enter in the nginx pod
+# kubectl exec -it nginx-pod -n nginx -- bash
+
+# To check logs of pod
+# kubectl describe pod/nginx-pod -n nginx
+

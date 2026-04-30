@@ -322,3 +322,5 @@ ye backend server hai iske andar sare deployment config aate hai ye older and ne
 ** Tiller ke pass rollback karne ki bhi ability hoti hai agar new version fail hota hai tho
 
 but ye ek security conser bhi tha as iske pass bahut sari access thi entire cluster as it can create, update, delete things in the cluster
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------

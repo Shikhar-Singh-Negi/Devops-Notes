@@ -1,0 +1,70 @@
+## Most Important commands
+
+# To enter in the nginx pod
+# kubectl exec -it nginx-pod -n nginx -- bash
+
+# To check logs of pod
+# kubectl describe pod/nginx-pod -n nginx
+
+
+
+#### Steps
+
+1. create namespace
+2. create pod  (deployment likhoge tho isse banane ki jarurat nahi hai)
+3. create deployment (replicaSet, StatefulSet, deployment)
+
+
+
+##  namespace
+
+# to create namespace
+# kubectl apply -f namespace.yml
+
+## pod 
+
+# To create pod
+# kubectl apply -f pod.yml
+
+# To check 
+# kubectl get pods -n nginx
+#                    namespace
+
+-----------------------------------------------------
+## Deployment
+
+# to create
+# kubectl apply -f deployment.yml
+
+# To Scale up
+# kubectl scale deployment/nginx-deployment -n nginx --replicas=5
+#                                                 how many you want
+
+# To Scale down to 1
+# kubectl scale deployment/nginx-deployment -n nginx --replicas=1
+#                                                 how many you want
+
+# To update image                                      container name
+# kubectl set image deployment/nginx-deployment -n nginx nginx=nginx1.27.1
+#                                               namespace      image name
+# They all will not get update at the same time, in this some pods are running and some pode get update after they get update then other get update.
+
+
+
+
+
+
+## Deployment(make copy)
+*( work of these are same to make replica)
+
+1. replicaSet :- It create exact same copy of the pod
+
+2. StatefulSet :- It will gitve the numbering to the pod
+
+3. Deployment(rolling updates) :- It updates pod one by one
+
+* rolling updates:  In this all pods will not get updated at the same time, some gets update and some are running and vice-verca
+
+
+** replication controller :- It contole or manages replication of pods
+

@@ -1,0 +1,44 @@
+# It is use to scale the applications
+
+kind: Deployment
+apiVersion: app/v1
+metadata:
+  name: nginx-deployment
+  namespace: nginx
+spec:
+  #  kitna banana hai
+  replicas: 2
+  # kiska banana hai
+  selector:
+    matchLabels:
+      app: nginx
+# define pod(pod.yml)  agar hum pod.yml nahi bhi likhege tho bhi chalega
+  template:
+    metadata:
+      name: nginx-dep-pod
+      lables:
+        app: nginx
+
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+
+# to create
+# kubectl apply -f deployment.yml
+
+# To Scale up
+# kubectl scale deployment/nginx-deployment -n nginx --replicas=5
+#                                                 how many you want
+
+# To Scale down to 1
+# kubectl scale deployment/nginx-deployment -n nginx --replicas=1
+#                                                 how many you want
+
+# To update image                                      container name
+# kubectl set image deployment/nginx-deployment -n nginx nginx=nginx1.27.1
+#                                               namespace      image name
+# in this some pods are running and some pode get update after they get update then other get update
