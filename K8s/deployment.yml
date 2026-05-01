@@ -41,4 +41,4 @@ spec:
 # To update image                                      container name
 # kubectl set image deployment/nginx-deployment -n nginx nginx=nginx1.27.1
 #                                               namespace      image name
-# in this some pods are running and some pode get update after they get update then other get update
+# They all will not get update at the same time, in this some pods are running and some pode get update after they get update then other get update. 

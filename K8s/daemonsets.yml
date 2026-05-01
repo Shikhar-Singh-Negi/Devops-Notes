@@ -1,0 +1,30 @@
+kind: DemonSet
+apiVersion: app/v1
+metadata:
+  name: nginx-demonsets
+  namespace: nginx
+spec:
+  #  Isme replica nahi hoti ye ensure karta hai ki kitna replica hone chaiye
+  # kiska banana hai
+  selector:
+    matchLabels:
+      app: nginx
+# define pod(pod.yml)  agar hum pod.yml nahi bhi likhege tho bhi chalega
+  template:
+    metadata:
+      name: nginx-dmn-pod
+      lables:
+        app: nginx
+
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+# To create
+#  kubectl apply -f daemonsets.yml
+
+# To check
+# kubectl get pods -n nginx -o wide
