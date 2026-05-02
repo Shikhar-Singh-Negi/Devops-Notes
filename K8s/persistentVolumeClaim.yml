@@ -1,0 +1,19 @@
+# It is use to claim/use persistent volume
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: local-pvc
+  namespace: nginx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-storage
+
+# To create claim
+#  kubectl apply -f persistentVolumeClaim.yml
+
+# To check
+#  kubectl get pvc

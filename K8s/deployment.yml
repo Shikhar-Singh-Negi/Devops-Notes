@@ -25,6 +25,16 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
+        # mount the storage to the local-pvc
+        volumeMount:
+        - mountPath: /var/www/html
+          name: my-volume
+      volumes:
+        - name: my-volume
+          PersistentVolumeClaim:
+            claimName: local-pvc
+
+
 
 
 # to create
@@ -42,3 +52,8 @@ spec:
 # kubectl set image deployment/nginx-deployment -n nginx nginx=nginx1.27.1
 #                                               namespace      image name
 # They all will not get update at the same time, in this some pods are running and some pode get update after they get update then other get update. 
+
+
+# Trobuleshoot
+# if got any proble use this to check
+# kubectl describe <podname> -n namespace

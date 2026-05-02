@@ -1,0 +1,26 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: local-pv
+  namespace: nginx
+  labels:
+    app: local-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  # agar ye volume delete bhi kar diya tho host machine pe retain rahe 
+  PersistentVolumeReclaimPolicy: retain
+  # different type of storage we can use like cloud storage, local storage, network storage, etc
+  storageClassName: local-storage
+  Hostpath:
+    path: /mnt/data
+   
+# To create
+#  kubectl apply -f persistentVolume.yml
+
+# To check
+#  kubectl get pv
+
+# ye persistent Volume ban gaya ab kisko use karne ke liye claim karna padega

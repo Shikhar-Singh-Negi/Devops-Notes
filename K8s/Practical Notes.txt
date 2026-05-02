@@ -102,3 +102,60 @@ CronJobs :- The task/job that we can schedule
                        schedule
  ex:- backup -->  *   *   *   *   *
                  min hour Doy Dow Dom
+            We can use crontab guru for easy
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Storage
+
+When we creat a pod it runs on a server, it can delete, destroy, etc anytime
+so the data inside it can aulo be delete anytime. To prevent this we create volumes
+to bind/persist data with host. we requir persistent volume or persistent volume claim.
+
+# We create persistent volume
+  ye persistent Volume bannne ke baad ab kisko use karne ke liye claim karna padega
+  using persistentVolumeClaim.yml
+
+** Ex:- we first creat pv and then claim in the deploymenty.yml
+    Steps:- 1. first we create pv 
+            2. and then claim that in pvc and name this as local-pvc
+            3. and then use the name local-pvc to claim the storage in deployment
+
+## These storage are in docker container
+if you want to go inside the storage container
+ #  docker exec -it <Container id> bash
+   
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Service
+
+Deployment ko bahar ke log ko access karwane ke liye hum service proxy banate hai 
+service redirect karwati hai
+
+
+# TO create
+#  kubectl apply -f service.yml
+
+# TO check
+#  kubectl getall -n nginx
+
+# TO forward port for external users
+#  kubectl port-forward service/nginx-service -n nginx 80:80 --address=0.0.0.0
+
+if not working use 
+# TO create
+#  kubectl apply -f service.yml
+
+# TO check
+#  kubectl getall -n nginx
+
+# TO forward port for external users(ye ek environment ke andar chalaiyega)
+#  sudo -E kubectl port-forward service/nginx-service -n nginx 80:80 --address=0.0.0.0
+
+------------------------------------------------------------------
+
+## Ingress
+
+It re-route traffice 
+We use this to re-route between microservices
+It is a service which allows to manage traffice and re-route 

@@ -1,0 +1,29 @@
+kind: job
+apiVersion: batch/v1
+metadata:
+  name: demo-job
+  namespace: nginx
+spec:
+  # kitni baar chalana hai
+  completions: 1
+  #  iss job ko single chalana hai ya parallel
+  parallelism: 1
+  templet:
+    metadata:
+      name: demo-job-pod
+      labels:
+        app: batch-task
+    spec:
+      containers:
+      - name: batch-container
+      # it is use only to execute commands
+        image: busybox:latest
+        command: ["sh", "-c", "echo hello friends && sleep 10"]
+      # if container work complete or face error you dont want to restart
+      restartPolicy: never
+
+# To create 
+# kubectk apply -f job.yml
+
+#  To check            it complete task after 10 second
+# kubectl get pods -n nginx 
