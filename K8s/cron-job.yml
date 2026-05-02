@@ -1,0 +1,59 @@
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: minute-backup
+  namespace: nginx
+
+spec:
+  # ever 2 min me chalega
+  schedule: "*/2 * * * *"
+  jobTemplet:
+    spec:
+      templet:
+        metadata:
+          name: minute-backup
+          labels:
+            app: minute-backup
+
+      # pod spec
+        spec:
+          containers:
+          - name: batch-container
+            image: busybox:latest
+            command:
+            - sh
+            - -c
+            # this > use for multiline commands
+            - >
+              echo "Backup Started" ;
+              mkdir -p /backups &&
+              mkdir -p /demo-data &&
+              cp -r /demo-data /backup &&
+              echo "Backup completed" ;
+          # it is use to store data
+          # this we have to make these volume becaues we have to store data/folder otherwise we can skip this part
+            volumeMounts:
+              - name: data-volume
+              # isse folder banega
+                mountPath: /demo-data
+              - name: backup-volume
+                mountPath: /backups
+          restartPolicy: OnFailure  
+            # Create an storage isme data loss nahi hoga
+          volumes:
+            - name: data-volume
+              hostPath:
+                path: /demo-data
+                type: DirectoryOrCreate
+
+            - name: backup-volume
+              hostPath:
+                path: /backups
+                type: DirectoryOrCreate
+
+# To create
+#  kubectl apply -f cronjab.yml
+
+# To check
+#  kubectl get cronjob -n nginx
+

@@ -15,7 +15,7 @@
 3. create deployment (replicaSet, StatefulSet, deployment)
 
 
-
+----------------------------------------------------
 ##  namespace
 
 # to create namespace
@@ -30,7 +30,19 @@
 # kubectl get pods -n nginx
 #                    namespace
 
------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+
+## WorkLoads
+
+1. Deployments
+2. StatefulSet
+3. DaemonSets
+4. replicaSet
+5. Jobs
+6. CronJobs
+
+Note :- These all are written in the kind section in yml menifest file.
+
 ## Deployment
 
 # to create
@@ -50,10 +62,9 @@
 # They all will not get update at the same time, in this some pods are running and some pode get update after they get update then other get update.
 
 
+#*#* Deployment is more advance then the replicaSet as it have feature like rolling Update.
 
-
-
-
+------------------------------------------------------------------
 ## Deployment(make copy)
 *( work of these are same to make replica)
 
@@ -61,10 +72,33 @@
 
 2. StatefulSet :- It will gitve the numbering to the pod
 
-3. Deployment(rolling updates) :- It updates pod one by one
+3. Deployment(rolling updates) :- It updates pod one by one(auto scaling, auto healing ,rolling updates).
+
+4. DaemonSets:- Har node pe ek replica chalti rahe
 
 * rolling updates:  In this all pods will not get updated at the same time, some gets update and some are running and vice-verca
 
 
 ** replication controller :- It contole or manages replication of pods
 
+-----------------------------------------------------------------
+
+## Jobs, CronJobs
+
+Job :- ek container se ek single task karana hai
+
+  Container --> Task --> Job --> done
+
+Ex:- backup, patching, update, etc ekbar ho fir khatam
+
+isko hum single ya parallel node me chala sakte hai
+
+
+CronJobs :- The task/job that we can schedule 
+            ye task tab tak chalta rahega, create hota rahega jabtak schedule puran na ho jaye
+
+ * konsa task kab karna hai  
+ cron time
+                       schedule
+ ex:- backup -->  *   *   *   *   *
+                 min hour Doy Dow Dom
