@@ -1,0 +1,65 @@
+kind: StatefulSet
+apiVersion: app/v1
+metadata:
+  name: mysql-statefulset
+  # First we have to create namespace
+  namespace: mysql
+
+spec:
+  serviceName: mysql-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+    template:
+      metadata:
+        lables:
+          app: mysql
+      spec:
+        containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+          - containerPort: 3306
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            vale: root
+
+          - name: MYSQL_DATABASE
+            value: devops
+          volumeMount:
+          - name: mysql-data
+            mountPath: /var/lib/mysql
+
+    volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+
+# We have to create service.yml
+
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: mysql-service
+#   namespace: mysql
+# spec:
+#   clusterIP: None
+#   selector:
+#     app: mysql
+#   ports:
+#   - name: mysql
+#     protocol: TCP
+#     port: 3306
+#     targetPort: 3306
+
+# TO create
+#  kubectl apply -f service.yml
+#  kubeclt apply -f statefulset.yml
+
+# To check 
+# watch kubectl get pods -n mysql

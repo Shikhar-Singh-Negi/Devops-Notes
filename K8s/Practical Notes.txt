@@ -106,7 +106,9 @@ CronJobs :- The task/job that we can schedule
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## Storage
+#### Storage
+
+## persistent volumes(PV) & persistent Volume Claim(PVC)
 
 When we creat a pod it runs on a server, it can delete, destroy, etc anytime
 so the data inside it can aulo be delete anytime. To prevent this we create volumes
@@ -124,8 +126,19 @@ to bind/persist data with host. we requir persistent volume or persistent volume
 ## These storage are in docker container
 if you want to go inside the storage container
  #  docker exec -it <Container id> bash
-   
+
+-----------------------------------------------------------------------------------
+
+## StatefulSet with ConfigMaps & Secrets 
+
+
+In statefulset we delete a pod it will recreate automaticly with the same position
+ 
+
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Networking
 
 ## Service
 
@@ -158,4 +171,17 @@ if not working use
 
 It re-route traffice 
 We use this to re-route between microservices
-It is a service which allows to manage traffice and re-route 
+It is a service which allows to manage traffice and re-route
+
+Ingress controller:- It helps in cluster level routing.
+We have to made this in kind: cluster
+
+Steps:-
+  1. we have to install ingress controller yml file from internet
+  2. it creates ingress-nginx namespace
+  3. create new file ingress.yml
+  4. 
+
+ ##**  k8s annotations
+   #  isse /app, /nginx wale route work karege warna page notfound aayega
+  #  warn direct / hi use karna padega 

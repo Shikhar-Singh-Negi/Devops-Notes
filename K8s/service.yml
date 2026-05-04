@@ -13,4 +13,13 @@ spec:
       targetPort: 80
   # Service hai types like :- node port, clusterip, load balancer, externalip, etc 
   type: ClusterIP
-  
+
+
+# TO create
+#  kubectl apply -f service.yml
+
+# TO check
+#  kubectl getall -n nginx
+
+# TO forward port for external users
+#  kubectl port-forward service/nginx-service -n nginx 80:80 --address=0.0.0.0

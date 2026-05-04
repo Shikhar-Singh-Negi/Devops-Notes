@@ -1,0 +1,34 @@
+apiVersion: networking.k8.io/v1
+kind: Ingress
+metadata:
+  name: nginx-notes-ingress
+  namespace: nginx
+  #  isse /app, /nginx wale route work karege warna page notfound aayega
+  #  warn direct / hi use karna padega 
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: / 
+spec: 
+  rules:
+  - http:
+      path:
+      - pathType: Prefix
+        path: /nginx
+        backend:
+          service:
+            name: nginx-service
+            port: 
+              number: 80
+      - pathType: Prefix
+        path: /app
+        backend:
+            service:
+              name: notes-app-service
+              port: 
+                number: 8000
+
+# To create
+#  kubectl apply -f ingress.yml
+
+
+# Service ko expose karna hai
+#  kubectl port-forward service/ingress-nginx-conrtoller -n ingress-nginx 80:80 --address=0.0.0.0

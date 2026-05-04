@@ -56,4 +56,5 @@ spec:
 
 # Trobuleshoot
 # if got any proble use this to check
-# kubectl describe <podname> -n namespace
+# kubectl describe pod/<podname> -n namespace
+
