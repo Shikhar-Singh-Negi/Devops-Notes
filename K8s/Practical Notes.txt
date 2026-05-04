@@ -132,9 +132,13 @@ if you want to go inside the storage container
 ## StatefulSet with ConfigMaps & Secrets 
 
 
-In statefulset we delete a pod it will recreate automaticly with the same position
- 
+In statefulset we delete a pod it will recreate automaticly with the same position, name 
 
+* ConfigMaps:- jitne bhi env variables, variables, values sare configurations alag file me rahe.
+
+* secrets:- hum password ko direct aase hi nahi dalte hai warna wo koi bhi dekh sakta hai isko hum secrets me dalte hai.
+
+ 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
