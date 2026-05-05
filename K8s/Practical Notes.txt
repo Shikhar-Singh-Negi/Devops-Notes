@@ -238,9 +238,46 @@ probe is a request to check pod is working or not
 Taints and tolerations are Kubernetes mechanisms that allow nodes to repel specific pods (taints) while enabling other pods to allow scheduling onto those nodes (tolerations). Taints (applied to nodes) and tolerations (applied to pods) act as a pair to ensure, or restrict, workload placement on specialized nodes.
 
 # To taint
-# Example             #name                 # Key
+# Example             #name                 # Key-value
 #  kubectl taint node tws-cluster-worker2 prod=true:NoSchedule
 
 # To remove taint
 #  kubectl taint node tws-cluster-worker2 prod=true:NoSchedule-
 
+# tolerate me hum pod.yml ke ander key-value dal ke run kar sakte hai
+
+-------------------------------------------------------------------------
+
+Very Important
+## Horizontal Pod Autoscaler (HPA) and Vertical Pod Autoscaler (VPA)
+
+# HPA
+  It increase number of replicas of pod 
+  It is mainly used in apps/ stateless sets
+  HPA (Horizontal): Adds more replicas. Best for stateless apps, web services, and sudden, high-traffic loads.
+
+# VPA
+  It increase resource of a pod(100M --> 500M)
+  It is mainly used in statefulset.
+  VPA (Vertical): Increases CPU/Memory of existing pods. Best for stateful apps, applications with fixed capacity, or to right-size resource requests.
+
+# KEDA (Kubernetes Event-Driven Autoscaler)
+
+  Focus: Scales the number of replicas, but based on external event sources.
+  it use HPA to scale based on specific metrics.
+  It choose what to use HPA or VPA based on matrics calculations.
+
+
+#* To do this first we have to add metric server
+
+* in minikube
+# minikube addons enable metrics-server
+
+* in kind cluster
+# kubectl apply -f <url>
+
+* To check uses
+#  kubectl top node
+
+
+## HPA

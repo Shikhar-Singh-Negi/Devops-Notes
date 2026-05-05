@@ -25,9 +25,14 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-        # Liveness Probe
+        # Probe
 
         livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+
+        readinessProbe:
           httpGet:
             path: /
             port: 80
