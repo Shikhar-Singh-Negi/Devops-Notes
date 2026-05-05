@@ -6,6 +6,9 @@
 # To check logs of pod
 # kubectl describe pod/nginx-pod -n nginx
 
+# Jabbhi koi pod pending me jaye to hum usko describe karke check karte hai
+#  kubectl describe pod <pod name> -n namespace
+
 
 
 #### Steps
@@ -136,9 +139,16 @@ In statefulset we delete a pod it will recreate automaticly with the same positi
 
 * ConfigMaps:- jitne bhi env variables, variables, values sare configurations alag file me rahe.
 
-* secrets:- hum password ko direct aase hi nahi dalte hai warna wo koi bhi dekh sakta hai isko hum secrets me dalte hai.
+* secrets:- hum password ko direct aase hi nahi dalte hai hum isko encode karke dalte hai isliye hum secrets me dalte hai.
 
- 
+ isme humne kahi pe bhi apne db name aur password ko expose nahi kiya hai
+
+## mysql production level ko banane me humne jada kuch nahi kiya
+1. namespace
+2. Service
+3. ConfigMaps
+4. secrets
+5. statefulset
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
