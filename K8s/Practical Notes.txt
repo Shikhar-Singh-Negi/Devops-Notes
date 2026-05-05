@@ -199,3 +199,41 @@ Steps:-
  ##**  k8s annotations
    #  isse /app, /nginx wale route work karege warna page notfound aayega
   #  warn direct / hi use karna padega 
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Scaling and Scheduling
+
+## Resource Quotas and Limits
+ ek pod kitna max resource use kar sakta hai usko set karna 
+
+#*# This thing we check in the deployment.yml
+ye hum containers ke andar likhte hai
+ # Resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+--------------------------------------------------------------------
+
+## Probs
+
+probe is a request to check pod is working or not
+
+ * Liveness Probe :- It checks your pod is live or dead
+ * Readiness Probe :- It check after a pod is created is ready or not
+ * Startup Probe :-  It check poad when the pod start it start properly or not
+
+# To check
+#  kubectl describe pod/<pod name> -n namespace
+
+----------------------------------------------------------------------
+
+## Taints/Tolerations
+
+
+
