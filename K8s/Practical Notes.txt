@@ -9,6 +9,10 @@
 # Jabbhi koi pod pending me jaye to hum usko describe karke check karte hai
 #  kubectl describe pod <pod name> -n namespace
 
+ek file me 3 time - karne ke baad dusri yml file bhi likh sakte hai
+ex:- 
+
+---
 
 
 #### Steps
@@ -280,4 +284,66 @@ Very Important
 #  kubectl top node
 
 
-## HPA
+## HPA & VPA   We Do this in apache server
+
+--------------------------------------------------------------------
+
+## Node Affinity
+
+Node affinity is a set of rules that tells the Kubernetes Scheduler which nodes are eligible to host your Pods based on labels on those nodes.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Cluster Administration
+
+## Important commands
+
+# To check user
+# kubectl auth whoami
+
+# To check access to a pod
+# kubectl auth can-i get pods
+
+# To check
+# kubectl auth can-i get pods --as=apache-user -n apache
+
+-------------------------------------------------------------------
+
+
+## RBAC(Role Base Access Control)  [role.yml]
+
+Iska basic kaam hai ki hum user/Service account ko kitna access/role dena chate hai
+
+hum isko do level pe karsakte hai 
+
+1. namespace Level       roles     role binding
+2. Cluster Level       cluster role   cluster role binding
+
+RBAC --> Access --> Role
+
+To Study
+1. Service Account      (namespace level) [get pod, delete pod, etc]
+2. Users                (cluster level)   [cluster logs, cluster pods, etc]
+
+namespace Level :- 
+  roles ki iss namespace me jo bhi deployment hai isme kya main get , delete, update kar sakta hu.
+  isko role dene ke liya role binding chaiye.
+
+Cluster Level :-
+ isme Cluster Role ko bind karne ke liye cluster role binding chaiye
+
+#*# Jab humko monitring, loging iss level ko karne ke liye hum cluster level use karte hai.
+
+# To check
+# kubectl auth can-i get pods --as=apache-user -n apache
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+#### monitring and Logging
+
+## Cluster level(RBAC)
+
+Steps:-
+  1. kubctl apply -f <url dashboard>
