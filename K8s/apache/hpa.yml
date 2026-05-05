@@ -1,0 +1,35 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: 
+  name: apache-hpa
+  namespace: apache
+spec:
+  scaleTargetRef:
+  # kisko karna hai scale uski details likhni hai
+    kind: Deployment
+    name: apache-deployment
+    apiVersion: app/v1
+
+  minReplicas: 1
+  maxReplicas: 5
+
+  metrics:
+  # kis basis pe scale kare
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+# TO apply this
+# kubectl apply -f hpa.yml
+
+# To check
+#  kubectl get hpa -n apache
+
+# To generate load
+#  kubectl run -i -tty load-generator --image=busybox -n apache /bin/sh
+
+# And type this
+#  while true; do wget -q -O-http://apache-service.apache.svc.cluster.local; done

@@ -4,7 +4,7 @@ metadata:
   name: apache-deployment
   namespace: apache
 spec:
-  replica: 1
+  replicas: 1
   selector:
     matchLables:
       app: apache
@@ -12,7 +12,8 @@ spec:
   templet:
     metadata:
     name: apache
-
+    lables:
+      app: apache
     spec:
       containers:
       - name: apache
