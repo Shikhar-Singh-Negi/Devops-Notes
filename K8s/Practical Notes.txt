@@ -235,5 +235,12 @@ probe is a request to check pod is working or not
 
 ## Taints/Tolerations
 
+Taints and tolerations are Kubernetes mechanisms that allow nodes to repel specific pods (taints) while enabling other pods to allow scheduling onto those nodes (tolerations). Taints (applied to nodes) and tolerations (applied to pods) act as a pair to ensure, or restrict, workload placement on specialized nodes.
 
+# To taint
+# Example             #name                 # Key
+#  kubectl taint node tws-cluster-worker2 prod=true:NoSchedule
+
+# To remove taint
+#  kubectl taint node tws-cluster-worker2 prod=true:NoSchedule-
 

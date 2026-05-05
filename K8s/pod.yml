@@ -11,6 +11,14 @@ spec:
     ports:
     - containersPort: 80 
 
+  # Tolerate
+  tolerations:
+    - key: "prod"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+       
+
 # To create pod
 # kubectl apply -f pod.yml
 
