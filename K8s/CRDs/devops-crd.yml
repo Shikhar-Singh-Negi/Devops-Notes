@@ -1,0 +1,42 @@
+# This is definition
+kind: CustomeResourceDefinition
+apiVersion: apiextensions.k8s.io/v1
+metadata:
+  name: devopsbatches.trainwithshubham.com
+spec: 
+  group: trainwithshubham.com
+  names:
+    plural: devopsbatches
+    singular: devopsbatch
+    kind: DevOpsBatch
+    shortNames:
+      - junoon
+      - batches
+      - tws
+  scope: Namespaced
+  version:  
+  - name: v1 
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec: 
+            type: object
+            properties:
+              name:
+                type: string
+                description: "This is the name of the devops batch"
+              duration:
+                type: string
+                description: "This is the duration of the devops batch"
+              mode:
+                type: string
+                description: "This is the mode of the devops batch"
+              platform:
+                type: string
+                description: "This is the platform of the batch"
+
+# TO create
+#  kubectl apply -f devops-crd.yml

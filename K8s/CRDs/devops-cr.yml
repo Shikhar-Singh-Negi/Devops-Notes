@@ -1,0 +1,15 @@
+kind: DevOpsBatch
+apiVersion: trainwithshubham.com/v1
+metadata:
+  name: junoon-batch-9
+spec:
+  name: DevOps-Zero To hero junoon Batch 9
+  duration: 3 months from 25th January 2025
+  platform: trainwithshubham.com
+  mode: Live as always
+
+# To create
+#  kubectl apply -f devops-cr.yml
+
+# To check
+#  kubectl get devopsbatches
