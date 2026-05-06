@@ -12,3 +12,6 @@ roleRef:
   kind: Role
   name: apache-manager
   apiGroup: rbac.authorization.k8s.io
+
+# To check
+# kubectl auth can-i get pods --as=apache-user -n apache

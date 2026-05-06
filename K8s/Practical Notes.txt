@@ -338,6 +338,13 @@ Cluster Level :-
 # To check
 # kubectl auth can-i get pods --as=apache-user -n apache
 
+## Custom Resource Definitions(CRDs).
+
+# Resource :- in k8s pod, services, deployment, etc are known as Resources
+              ye sare resources phale se hi hote hai 
+
+# Custom resource :- Jab humko custome resource banae hai tho hum CRDs se banate hai
+                     Ye ek structure hai iski help se hum kudhke resourses banate hai
 
 --------------------------------------------------------------------------------------------------------------------------------
 
@@ -347,3 +354,10 @@ Cluster Level :-
 
 Steps:-
   1. kubctl apply -f <url dashboard>
+  2. create dashboard-admin-user.yml
+  3. kubectl -n Kubernetes-dashboard create token admin-user
+  4. kubectl proxy --address=0.0.0.0 --accept-hosts='.*'
+  5. and check the url
+    # https://localhost:8001
+      ip address/api/v1/namespace/Kubernetes-dashboard/services/https:Kubernetes-dashboard:/proxy/
+  6. paste token
