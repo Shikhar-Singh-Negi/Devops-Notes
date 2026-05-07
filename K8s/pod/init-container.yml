@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: init-test
+
+spec:
+  initContainer:
+  - name: init-container
+    image: buzybox:latest
+    command: ["sh","-c", "echo 'Initalization started ...'; sleep 5; echo 'Initalization completed'"]
+
+  Container:
+  - name: main-container
+    image: buzybox:latest
+    command: ["sh","-c", "echo 'Main container started"]
+
+
+# To create
+#  kubectl -f apply init-container.yml
+
+# To check logs
+#  kubectl logs init-test -c init-container -c main-container
+
+# TO check while runing
+#  watch kubectl get pods
+

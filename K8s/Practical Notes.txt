@@ -338,7 +338,7 @@ Cluster Level :-
 # To check
 # kubectl auth can-i get pods --as=apache-user -n apache
 
-## Custom Resource Definitions(CRDs).
+## Custom Resource Definitions(CRDs).         (not asked in interviews)
 
 # Resource :- in k8s pod, services, deployment, etc are known as Resources
               ye sare resources phale se hi hote hai 
@@ -361,3 +361,97 @@ Steps:-
     # https://localhost:8001
       ip address/api/v1/namespace/Kubernetes-dashboard/services/https:Kubernetes-dashboard:/proxy/
   6. paste token
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Advance feature
+
+
+## Operators                 (not asked in interviews)
+It generally used for programming(in python, go).
+* We create CRDs it is used to program it, schedule it, to add extention we use Operators
+  
+  EX- some Operators
+  1. Argo CD
+  2. Promithesis
+
+jo CRDs ke custom resource hote hai isko program karne ke liye use karte hai
+
+
+
+## Helm package manager  (Most Important)
+
+first install Helm
+
+It will create all the menifest file of all we need like deployment, ingress, service, etc
+
+We dont have to write any this we just have to provide values in values.yml
+
+** Service ports change karna padega
+** aur persenal app ko dalna hai tho values me change karna hai
+Steps:-
+  1. To create a Chart
+    helm create apache-helm
+
+  2. Enter to the apache-helm/
+
+  3. install tree to see how helm created 
+      tree
+
+  4. open values.yml
+      edit/update values as you want
+  
+  5. the we only have to package it
+      helm package apache-helm/
+
+  6. then install chat 
+
+      ## For dev 
+                  # name we want          # name of namespace you want
+      helm install dev-apache apache-helm -n dev-apache --create-namespace
+
+      ## For prod
+      ## For dev 
+                  # name we want          # name of namespace you want
+      helm install prod-apache apache-helm -n prod-apache --create-namespace
+
+  7. To uninstall Chart
+      helm uninstall dev-apache
+
+
+## If we want to upgrade Chart
+
+1. go to value.yml upgrade it
+    vim apache-helm/values.yml
+
+2. upgrade helm Chart
+    vim apache-helm/Chart.yml
+
+3. update file
+  helm package apache-helm
+
+4. To upgrade 
+  helm upgrade prod-apache ./apache-helm -n prod-apache
+
+5. To rollBack update
+                        # revision number
+  helm rollback prod-apache 1 -n prod-apache
+
+
+** basically helm helps us to install, uninstall, rollback apps very fast without writing menifest files
+
+------------------------------------------------------------------------
+         
+         Pods
+## Init Container vs SidecarContainer
+
+init container main           |  ek container ke andar
+container se phale chalega    |  ek aur container chalega
+                              |
+
+# ye pod folder ke andar likha hai 
+
+-------------------------------------------------------------------------
+
+## Service Mesh
+
