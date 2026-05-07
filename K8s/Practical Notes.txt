@@ -455,3 +455,55 @@ container se phale chalega    |  ek aur container chalega
 
 ## Service Mesh
 
+It provide gateway by which we route our services and redirect traffic 
+complex service ko hum distribute karsakte hai jisse complexicity simplify ho jaye 
+
+Popular tool:- istio
+# It helps to manage microservices urls
+
+for interviews
+# istio uses envoy which is a sidecar container/proxy
+  that allows all the services which we have created,
+  jitna bhi trafic uske logs inject karta reheta hai  
+
+# Istiod It is a controle plain of istio, it provides service discovery
+  
+  - Pilot :- Responsible for configuration the proxies at runtime.
+  - Citadel :- Responsible for certificate issuance and rotation
+  - Galley :- Responsible for validating, ingesting, aggregating, transorming and distributing config within Istio.
+
+  -**Operator** :- the component provides user friendly options to operate the Istio service mesh.
+   
+
+
+# Steps:-    (check on google)
+  create istio testing cluster (AWS)
+  # kind create cluster name istio-testing
+
+  Install istio local
+  # curl -L <URL>
+
+
+## Important
+
+ #  ./istioctl :- this is a Istio configuration command line utility
+                  for service operators to debug and diadnose their Istio mesh.
+
+
+#### To run the shell all over the system we have to move the istioctl file
+
+    # sudo mv istioctl /usr/local/bin
+isse hum kahi pe bhi istioctl chala sakte hai
+
+
+# install istio
+  # istioctl install -f <link>
+
+# install k8s gateway API CRDs
+
+
+## Install kiali addons
+
+It is a dashboard it shows how service mesh look like.
+
+
