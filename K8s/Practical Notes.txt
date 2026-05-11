@@ -501,6 +501,7 @@ isse hum kahi pe bhi istioctl chala sakte hai
 
 # install k8s gateway API CRDs
 
+
 ## Install kiali addons
 
 It is a dashboard it shows how service mesh look like.
