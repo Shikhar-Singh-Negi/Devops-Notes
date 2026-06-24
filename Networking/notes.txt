@@ -1,0 +1,58 @@
+How networking works Ex:- netflix
+
+India <----------------> USA
+        optical fibers
+
+1. Request(www.netflix.com) 
+    (Browser)
+2. HTTP/HTTPS  Protocols
+
+3. Server (netflix in USA)
+        (ip address ex:- 3.4.5.6)
+
+4. DNS Sercers
+        (3.4.5.6 -> netflix)
+
+
+# TO Check all routs
+:-  traceroute netflix.com      // Tracert netflix.com (windows)
+
+# TO check site is working or not
+:- ping netflix.com 
+
+
+##         OSI Model      [ APS TND P ]
+
+1. Application  (HTTP/HTTPS)
+2. Presentation  (Syntacx, Security)
+3. Session (API, Socket)
+4. Transport (TCP)
+5. Network (Packets)
+6. Data Link (Ethernet)
+7. Physical   (Router, cable)
+
+
+##         TCP/IP  Model 
+
+1. Application
+2. Transport
+3. Internet
+4. Network Access
+
+
+
+## IP / Subnets
+
+* IP v4   -> limited (but can use widly using subnets).
+* IP v6
+
+An IP address uniquely identifies a device, while subnets divide a single, large network into smaller, manageable, and isolated segments. 
+
+
+### DNS / NAT / Firewalls
+
+
+
+
+### LoadBalancing
+

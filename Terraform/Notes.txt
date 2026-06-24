@@ -1,0 +1,112 @@
+#### Terraform Notes ####
+
+## Terraform :- 
+- Terraform is a tool for provisioning infrastructure.
+- It is an open source tool developed by HashiCorp.
+- It is a declarative tool, meaning we describe the desired state of the infrastructure and Terraform figures out how to achieve it.
+- It is a cross-platform tool, meaning it can be used on different operating systems.
+- It is a cross-cloud tool, meaning it can be used on different cloud providers (AWS, Azure, GCP, etc.).
+- It is a version-controlled tool, meaning we can track the changes in the infrastructure.
+- It is a state-managed tool, meaning it keeps track of the state of the infrastructure.
+- It is a modular tool, meaning we can use modules to organize our infrastructure.
+
+## Why using tarraform
+    1. Automate resources
+    2. Replicate infrastructure
+    3. manage state
+    4. use variables
+    5. plan changes
+    6. teamwork
+
+## Architecture
+- Terraform uses a client-server architecture.
+- The client is the Terraform CLI, which is installed on the user's machine.
+- The server is the cloud provider's API, which is accessed by the Terraform CLI.
+
+#### IAC(Infrastructure as Code)
+- IaC is the practice of managing and provisioning infrastructure through code rather than manual processes.
+- It allows you to define your infrastructure in a declarative way, meaning you describe the desired state of the infrastructure and Terraform figures out how to achieve it.
+
+## Advantage
+    1. Speed
+    2. Cost Savings
+    3. Reliability
+    4. Collaboration
+    5. Security
+    6. Scalability
+    7. Consistency
+    
+## Terraform vs Ansible
+    
+    Teraform:- 
+        1. provisioning(Create) of infrastructure
+        2. declarative
+
+    Ansible:-
+        1. Configuration Management
+        2. imperative
+
+
+
+## Teraform vs cloudFormation
+
+    Both are same Terraform is owned by IBM and  cloudFormation is owned by AWS.
+
+Note:-   Using Teraform we can creat AWS, Azure, GCP, etc. resources  in any cloud.
+         Using cloudFormation we can creat only AWS resources.
+
+
+##### Terraform HCL(HashiCorp Configuration Language) #####
+
+[.tf] files pe kaam karna hai.
+
+Steps:-
+    1. terraform init    (only one time per folder)
+    2. terraform validate (Check syntax)
+    3. terraform plan    (Check before apply)  [dry run, check before apply, shows output how it looks like]
+    4. terraform apply   (to create)
+    5. terraform destroy (to delete)
+
+## IMP
+
+    1. Block
+    2. Parameters
+    3. Arguments
+
+    Syntaxs:-
+
+        block Parameters {
+
+            //Arguments
+
+        }
+
+
+##  Kya Banana hai (IMP)
+
+    ## block
+        1. Infrastructure(Resource)
+            block = Resource
+
+        2. To show Output
+            block = Output
+
+        3. To store variable
+            block = variable
+
+    ## Parameters
+        Block ko identify karne ke liye.
+        ex:- ec2 instance, s3, etc
+
+        
+    Example:-
+                   resource type
+    // block      Parameters   resource name(Terraform ke liye referance hai.)
+        resource local_file my_file{
+            filename = "Automate.txt"
+            content = "Hello World"
+        }
+
+
+
+
