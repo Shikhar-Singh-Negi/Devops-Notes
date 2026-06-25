@@ -61,7 +61,7 @@ Note:-   Using Teraform we can creat AWS, Azure, GCP, etc. resources  in any clo
 [.tf] files pe kaam karna hai.
 
 Steps:-
-    1. terraform init    (only one time per folder)
+    1. terraform init    (Jitni bar provide change karege utni baar likhna padega)
     2. terraform validate (Check syntax)
     3. terraform plan    (Check before apply)  [dry run, check before apply, shows output how it looks like]
     4. terraform apply   (to create)
@@ -107,6 +107,12 @@ Steps:-
             content = "Hello World"
         }
 
+## To connect aws with terraform
 
+   1. we need aws cli
+   2. aws configure --> aws_access_key_id, aws_secret_access_key, aws_region
+   3. terraform init
+
+## To configure provider we have to create a procider.tf file.
 
 
