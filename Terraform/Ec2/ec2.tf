@@ -37,11 +37,13 @@ resource aws_security_group my_security {
 
 # ek ec2 instance
 
-resource aws_instance my_ec2 {
+resource aws_instance my_instance {
     key_name = aws_key_pair.my_key.key_name
     security_groups = [aws_security_group.my_security.name]  # interpolation
     instance_type = var.ec2_instance_type
     ami = var.ec2_ami_id
+    user_data = file("install_nginx.sh")  # to install nginx on instance. It allows us to run some commands. in startup
+    
 
     root_block_device {
         volume_size = var.ec2_root_storage_size
