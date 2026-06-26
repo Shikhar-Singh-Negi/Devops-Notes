@@ -124,3 +124,26 @@ Steps:-
 ## interpolation :- It is a way by which we can inherit/ extract value from a Terraform block.
    
    
+## agar selected cheez delete karni ho 
+    terraform destroy --target = name.resource
+
+
+## Dynamic Blocks/ meta keywords:-
+    It is a way to create multiple resources of same type.
+    
+    - count = number => kitni baar banana hai 
+    - for_each = set => konsi value leni hai
+        syntax:-
+            for_each = tomap({      # use to create map
+                "key1" = "value1",
+                "key2" = "value2",
+            })
+    - depends_on [ meta argument]
+    it is used to make sure that one resource is created before another resource.
+
+
+## Conditional Expressions
+
+        scenerio:- 
+            agar production env hai tho storage 30gb 
+            agar testing env hai tho storage 20gb
