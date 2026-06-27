@@ -72,6 +72,17 @@ resource aws_instance my_instance {
 
 }
 
+# # Server import jiska koi idea nahi hai.
+# resource "aws_instance" "my_new_instance" {
+#     ami = "unknown"
+#     instance_type = "unknown"
+
+# # terraform import aws_instance.my_new_instance <id>
+# }
+
+
+
+
 # to check it is ok
 # terraform validate
 

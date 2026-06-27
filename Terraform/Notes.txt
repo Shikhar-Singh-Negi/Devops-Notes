@@ -147,3 +147,73 @@ Steps:-
         scenerio:- 
             agar production env hai tho storage 30gb 
             agar testing env hai tho storage 20gb
+        
+        We do thi in variable file
+
+
+## Terraform State Management & Backends    {for 5+ years}
+
+## Terraform State
+- Terraform uses a state file to keep track of the resources that it manages.
+- The state file is a JSON file that contains the state of the resources.
+- The state file is used to determine what needs to be created, updated, or destroyed.
+
+# In Terraform, there are two types of state:
+    1. Local State
+    2. Remote State
+
+## 1. Local State
+- By default, Terraform uses local state.
+- The state file is stored in a file named "terraform.tfstate" in the same directory as the Terraform configuration.
+- Local state is not recommended for production environments because it is not shared between team members.
+
+## 2. Remote State
+- Remote state is stored in a remote backend, such as AWS S3, Azure Blob Storage, or Google Cloud Storage.
+- Remote state is recommended for production environments because it is shared between team members and is more secure.
+
+### S3 Remote State Configuration
+
+```terraform
+terraform {
+  backend "s3" {
+    bucket = "my-terraform-state"
+    key    = "prod/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+```
+
+
+### Commands :- 
+
+    - terraform state list  # it list down all the resources. 
+    - terraform state show <resource_name>  # it is used to show the state of the resources.
+    - terraform state mv <name> # it is used to move the resources from one backend to another backend.
+    - terraform state rm <name> # it is used to remove the resources from the state file. 
+
+
+#### Secure State Management ###
+
+    terraform>tfstate file we can not commit to git
+    So we have to use remote backend for state management.
+
+
+    # State Conflict:- 
+        when two people are working on same terraform configuration and both run terraform apply at the same time
+        then it will create a state conflict.
+        
+        To prevent this we use state locking.
+        we use remote backend for state locking in s3 with dynmo db.
+        
+        # Lock and release mechanism in terraform
+
+        Dynamo db generate a Lock Id and store it in remote backend.
+        
+        when other person runs terraform apply it check if the Lock Id is present or not.
+        If Lock Id is present then it will not run terraform apply.
+        If Lock Id is not present then it will run terraform apply.
+
+    ## Advantage of secure state management
+        1. .tfstate file is not commit on github
+        2. ek baar me ek hi persone file ko access kar sakta hai tho state conflict nahi ho sakta.
+         
