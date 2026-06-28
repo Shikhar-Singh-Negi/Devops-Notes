@@ -217,3 +217,12 @@ terraform {
         1. .tfstate file is not commit on github
         2. ek baar me ek hi persone file ko access kar sakta hai tho state conflict nahi ho sakta.
          
+
+    ## For remote backup
+
+        Create a s3 bucket and then edit terraform.tf of the file you want to save
+
+
+    ##note :-
+        command after changig terraform block
+            terraform init
