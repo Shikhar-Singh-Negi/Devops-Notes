@@ -68,6 +68,7 @@ resource aws_instance my_instance {
         # for each ke liye hai
         # name = each.key
         Name = "name you want to give"
+        Environment = var.env     # [IMP to switch worksp]
     }
 
 }

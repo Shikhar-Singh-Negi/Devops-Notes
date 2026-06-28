@@ -226,3 +226,41 @@ terraform {
     ##note :-
         command after changig terraform block
             terraform init
+
+
+
+#### Terraform Workspaces & Environment Management[For +5 years]
+
+    ## Terraform Workspaces[ye ek taraha se github ki branches jasa hai]
+        - By default terraform has one workspace called 'default'
+
+            isse hum tags me dalsakte hai Environment = var.env
+            
+            Commands to check available workspaces
+                - terraform workspace list
+            Commands to create new workspace
+                - terraform workspace new <workspace_name>
+            Commands to switch workspace
+                - terraform workspace select <workspace_name>
+            Commands to delete workspace
+                - terraform workspace delete <workspace_name>
+            Commands to show current workspace
+                - terraform workspace show
+        
+    ## Note:- We can link the terraform workspace with github and we have to sync it.
+
+#### Terraform Modules - Resuable code & Best practice
+
+    modules:- It is a template of code which can be used multiple times.
+              We can reffer this form the offical documents.
+            
+        ## Note:- We just have to put variables.
+    ex:-
+        module "ec2" {
+            source = "./modules/ec2"
+            name = "my-ec2"
+            instance_type = "t2.micro"
+            ami_id = "ami-0c55b159cbfafe1f0"
+        }
+    
+ 
