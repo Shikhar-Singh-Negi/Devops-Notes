@@ -270,5 +270,17 @@ agar build fail hojata hai fir file/config me hum change karte hai par bina iss 
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#### Docker with AI & Security
+
+* In prod env we use hardened dockerfile.
+
+## Docker scout:-
+      It is use for Image Security check (CVE - Common Vulnerabilities and Exposures)
+      Docker scout check base image use for
+      
+      Command:-
+              docker scout quickview imagename
 
 

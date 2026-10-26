@@ -1,0 +1,40 @@
+- name: Install Package
+  hosts: server
+  become: yes
+
+  # tasks:
+  #   - name: update package
+  #     apt:
+  #       name: nginx
+  #       state: latest
+  #   - name: start nginx
+  #     service:
+  #       name: nginx
+  #       state: started
+  #       enabled: yes    
+
+  # Install multiple packages [using loops]
+
+  var: 
+    packages_to_install
+      - tree
+      - zip
+      - unzip
+      - wget
+
+  tasks:
+    - name: install multiple packages
+      apt:
+        name: "{{ items }}"
+        state: latest
+      loop: "{{ packages_to_install }}"
+      when: ansible_facts["distribution"] == "Ubuntu"  # for condition ye jab true hogi tabhi ye chalega
+      
+    - name: show message
+      loop: "{{ packages_to_install}}"
+      debug:                                    # for showing result
+        msg: "Installing {{ items }}"
+        
+
+# To run 
+# ansible-playbook -i ../hosts.ini packages.yml

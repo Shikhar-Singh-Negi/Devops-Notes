@@ -7,17 +7,48 @@
 - It is a configuration management tool
 - It helps to manage different environment
 - It allows you to do Iaac and configuration management
+- It is agent less(we don't have to install any agent in client/server)
 
+## Why Ansible?
+- It reduce the time to market by faster configuration.
+- We need to have a scalable approach to manage multiple server.
+- Push based mechanism
 
 ## Ansible vs terraform
 
 - terraform - ye infrastructure banana me use hota hai.
 - Ansible - ye isko manage karne me use hota hai.
  
-
 ## Admin want to update all the system
 
 -Pull Based - Chef      Push Based - Ansible
+
+---------------------------------------------------------------
+
+## steps:-
+
+prerequisites:- 
+	- Every node should install python
+	- To check python version   which python3
+
+# To Connect server to master
+	- ssh-keygen  // In master node and copy the public key and past to the worker node.
+	- cat ansible-master_key.pub  // In master node to copy public key
+	
+	# In worker node
+		- vim .ssh/authorized_key  //and add the public key   [the esc + wq]
+
+	# To check we can ssh 
+		- ssh -i ansible-master-key <id>
+		- exit
+
+# To create ansible file
+
+	- vim hosts.ini    //It contains server information(private/public ip) or inventory[group data]
+	
+
+----------------------------------------------------------------
+
 
 # push based
 

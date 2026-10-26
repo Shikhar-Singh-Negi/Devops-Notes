@@ -1,0 +1,15 @@
+- name: Hello      # playbook name
+  hosts: servers       # run where
+  become: yes      # run as root user
+
+  vars:
+    my_name: Shikhar
+  tasks: 
+    - name: Greet user
+      command: echo "Hello {{ my_name }}"  
+
+# To run this
+# ansible-playbook -i hosts.ini(Give exact location of hosts.ini file) hello.yml
+
+# To check output
+#  ansible-playbook -i ../hosts.ini hello.yml -v
