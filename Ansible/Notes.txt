@@ -44,9 +44,17 @@ prerequisites:-
 
 # To create ansible file
 
-	- vim hosts.ini    //It contains server information(private/public ip) or inventory[group data]
+	- vim ansible-ini.ini    //It contains server information(private/public ip) or inventory[group data]
 	
+# TO check
+	- ansible -i ansible-ini.ini servers -m ping  
 
+
+## To give command from master to slave
+
+	- ansible -i hosts.ini servers -a "sudo apt-get update"
+
+ 
 ----------------------------------------------------------------
 
 
@@ -197,4 +205,18 @@ vim deploy_staicpage_play.yml
 
 - ansible-playbook deploy_staticpage_play.yml
 	
- 
+## Secret
+	## important
+	
+	no_log: true   
+	ye hamesha likhna hai jab bhi kahi password likhe.
+
+
+	isse hum important content/passwords ko encrypt kar sakte hai.
+	
+	1. pehle ek file banao ex- vault_password.txt
+	2. usme encryption key likho
+	3. chmod 600 vault_password.txt
+	4. ansible-valt encrypt secrets.yml --vault-password-file valt_password.txt
+	5. ab run karne ke liye file bhi chaiye
+	    ansible-playbook -i ../hosts.ini show_secrets.yml --vault-password-file valt_password.txt
